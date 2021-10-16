@@ -133,3 +133,43 @@ entry: {
 ```
 
 위와 같이 엔트리 포인트를 분리하는 경우는 **싱글 페이지 애플리케이션 SPA**이 아닌 특정 페이지로 진입했을 때 서버에서 해당 정보를 내려주는 형태의 **멀티 페이지 애플리케이션 MPA**에 적합합니다.
+
+
+## Output
+`output` 속성은 웹팩을 돌리고 난 결과물의 파일 경로를 의미
+```javascript
+// webpack.config.js
+module.exports = {
+  output: {
+    filename: 'bundle.js'
+  }
+}
+```
+`entry` 속성과 다르게 **객체형태**로 옵션들을 추가해야 합니다.
+
+
+
+## Output 속성 옵션 형태
+최소한 `filename`은 지정해줘야 하며 일반적으로 아래와 같이 `path` 속성을 함께 정의합니다.
+
+```javascript
+// webpack.config.js
+var path = require('path');
+
+module.exports = {
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, './dist')
+  }
+}
+```
+
+여기서 `filename` 속성은 웹팩으로 빌드한 파일의 이름을 의미하고, `path` 속성은 해당 파일의 경로를 의미합니다. 그리고 `path` 속성에서 사용된 `path.resolve()` 코드는 인자로 넘어온 경로들을 조합하여 유효한 파일 경로를 만들어주는 Node.js API입니다.
+
+이 API가 하는 역할을 좀 더 이해하기 쉽게 표현하면 아래와 같습니다.
+
+```javascript
+output: './dist/bundle.js'
+```
+
+`path` 라이브러리 참고 : https://nodejs.org/api/path.html
