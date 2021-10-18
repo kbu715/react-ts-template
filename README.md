@@ -582,3 +582,12 @@ module.exports = merge(common, {
 - 접근성에 대해 고려하는것은 좋은 윤리적인 도덕 관념을 보여 주는데, 이것은 서비스의 대중적인 이미지를 개선시킵니다.
 
 - 접근성을 향상시키는 다른 좋은 방법은 당신의 사이트를 휴대폰 사용자, 낮은 네트워크 속도의 사용자등 다른 여러 사용자가 사용하기 쉽게 만든다.
+
+
+## Prettier
+
+
+### Installed packages
+- `prettier` : core prettier library
+- `eslint-config-prettier` : disables eslint rules that might conflict with `prettier` formatting
+- `eslint-plugin-prettier` : runs `prettier` as an eslint rule
