@@ -425,3 +425,137 @@ module.exports = {
 위에서 정의한 소스 맵 설정 옵션 이외에도 많은 옵션들이 있습니다. 자세한 옵션 속성과 비교는 다음 링크로 확인하세요.
 
 [소스맵 설정 옵션 비교표](https://webpack.js.org/configuration/devtool/#devtool)
+
+
+## 웹팩 실행 모드 - mode
+
+```javascript
+module.exports = {
+  mode: 'none',
+  entry: '',
+  // ...
+}
+```
+
+웹팩 설정을 정의할 때 위와 같이 mode라는 속성을 정의하면 웹팩의 실행 모드가 설정됩니다. 웹팩의 실행 모드에는 다음 3가지가 있습니다.
+
+- `none` : 모드 설정 안함
+- `development` : 개발 모드
+- `production` : 배포 모드
+
+각 실행 모드에 따라 웹팩의 결과물 모습이 달라집니다. 개발 모드인 경우에는 개발자들이 좀 더 보기 편하게 웹팩 로그나 결과물이 보여지고, 배포 모드인 경우에는 성능 최적화를 위해 기본적인 파일 압축 등의 빌드 과정이 추가됩니다.
+
+> 모드의 기본 값을 설정하지 않으면 `production` 모드로 자동 설정됩니다.
+
+
+## 실행 모드에 따라 웹팩 설정 달리하기
+
+웹팩으로 실제 웹 애플리케이션을 개발할 때는 보통 아래와 같이 2가지 케이스로 구분하여 작업해야 합니다.
+
+- 개발할 때 사용할 웹팩 설정
+- 개발이 끝나고 배포할 때 사용할 웹팩 설정
+
+웹팩 설정 파일이 1개인 상태에서 실행 모드에 따라 특정 설정을 적용하는 방법은 다음과 같습니다.
+
+```javascript
+// webpack.config.js
+module.exports = (env) => {
+  let entryPath = env.mode === 'production'
+    ? './public/index.js'
+    : './src/index.js';
+
+  return {
+    entry: entryPath,
+    output: {},
+    // ...
+  }
+}
+```
+
+```json
+// package.json
+{
+  "build": "webpack",
+  "development": "npm run build -- --env.mode=development",
+  "production": "npm run build -- --env.mode=production"
+}
+```
+
+위 코드를 보면 먼저 웹팩 설정 파일의 방식은 객체에서 함수 형식으로 바뀌었습니다.
+
+```javascript
+// 기존
+module.exports = {};
+// 현재
+module.exports = () => {};
+```
+
+그리고 함수에 넘겨준 env 인자는 환경 변수를 의미하며 웹팩을 실행할 때 실행 옵션으로 넘겨줄 수 있습니다.
+
+```sh
+webpack --env.a=10
+```
+
+## Webpack Merge
+
+웹팩 머지는 단어 그대로 여러 개의 웹팩 설정 파일을 하나로 병합해주는 라이브러리입니다. 실행 모드에 따라 웹팩 설정하기에서도 언급했지만 일반적으로 웹 애플리케이션을 제작할 떄는 웹팩 설정을 개발(Development)용과 배포(Production)용으로 나누어 적용합니다.
+
+앞에서 배운 것처럼 실행 모드에 따라 조건 문으로 설정을 구분할 수 있으나 실제로 파일을 아예 나눠놓는 게 더 권장하는 방식입니다. 웹팩 머지는 이러한 상황에서 더 빛을 발휘할 수 있습니다.
+
+## 웹팩 설정 파일 구분 전략
+
+웹팩 머지를 효율적으로 사용하는 방법은 개발용과 배포용 설정 파일에서 공통으로 쓰이는 부분을 먼저 분리하는 것입니다. 파일 체계는 아래와 같은 형식으로 구성합니다.
+
+
+- webpack.common.js
+- webpack.dev.js
+- webpack.prod.js
+
+각 파일의 모습은 이렇습니다.
+
+```javascript
+// webpack.common.js
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.js'
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin(),
+  ],
+}
+```
+공통 설정 파일에는 **엔트리**, **아웃풋**, **플러그인**과 같이 실행 모드에 관계 없이 항상 들어가야 하는 코드를 추가합니다.
+
+```javascript
+// webpack.dev.js
+const merge = require('webpack-merge');
+const common = require('./webpack.common.js');
+
+module.exports = merge(common, {
+  mode: 'development',
+  devtool: 'inline-source-map',
+  devServer: { contentBase: './dist' }
+});
+```
+
+개발용 설정 파일에는 개발자 도구나 웹팩 데브 서버와 같은 설정을 추가합니다. 그리고 webpack-merge 라이브러리를 설치 및 로딩하고 나서 웹팩 공통 설정 파일인 webpack.common.js 파일을 로딩해서 같이 병합해줍니다.
+
+```javascript
+// webpack.prod.js
+const merge = require('webpack-merge');
+const common = require('./webpack.common.js');
+
+module.exports = merge(common, {
+  mode: 'production'
+});
+```
+
+배포용 설정 파일에는 배포하기 전 웹 리소스 최적화를 위한 설정들을 추가해줍니다.
+
+
+> 참고사이트
+
+- [webpack-merge 깃헙 repo](https://github.com/survivejs/webpack-merge)
+- [배포를 위한 웹팩 설정 가이드](https://webpack.js.org/guides/production/)
