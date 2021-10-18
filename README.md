@@ -40,7 +40,7 @@ export { sum, substract, pi }
 ## 웹팩의 등장 배경
 
 1. 파일 단위의 자바스크립트 모듈 관리의 필요성
-2. 웹 개발 작어 자동화 도구 (Web Task Manager)
+2. 웹 개발 작업 자동화 도구 (Web Task Manager)
 3. 웹 어플리케이션의 빠른 로딩 속도와 높은 성능
 (웹팩은 기본적으로 필요한 자원은 미리 로딩하는게 아니라 그 때 그 때 요청하자는 철학을 갖고 있습니다.)
 
@@ -257,3 +257,41 @@ module: {
   use: ['style-loader', 'css-loader', 'sass-loader']
 }
 ```
+
+## Plugin
+
+플러그인(plugin)은 웹팩의 기본적인 동작에 추가적인 기능을 제공하는 속성입니다. 로더랑 비교하면 로더는 파일을 해석하고 변환하는 과정에 관여하는 반면, 플러그인은 해당 결과물의 형태를 바꾸는 역할을 한다고 보면 됩니다.
+
+```javascript
+// webpack.config.js
+module.exports = {
+  plugins: []
+}
+```
+
+플러그인의 배열에는 생성자 함수로 생성한 객체 인스턴스만 추가될 수 있습니다. 예를들어
+
+```javascript
+// webpack.config.js
+var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+  plugins: [
+    new HtmlWebpackPlugin(),
+    new webpack.ProgressPlugin()
+  ]
+}
+```
+
+위의 두 플러그인은 각각 아래와 같은 역할을 합니다.
+
+- [HtmlWebpackPlugin](https://webpack.js.org/plugins/html-webpack-plugin/) : 웹팩으로 빌드한 결과물로 HTML 파일을 생성해주는 플러그인
+- [ProgressPlugin](https://webpack.js.org/plugins/progress-plugin/#root) : 웹팩의 빌드 진행율을 표시해주는 플러그인
+
+## 자주 사용하는 플러그인
+
+- [split-chunks-plugin](https://webpack.js.org/plugins/split-chunks-plugin/)
+- [clean-webpack-plugin](https://www.npmjs.com/package/clean-webpack-plugin)
+- [image-webpack-loader](https://github.com/tcoopman/image-webpack-loader)
+- [webpack-bundle-analyzer-plugin](https://github.com/webpack-contrib/webpack-bundle-analyzer)
