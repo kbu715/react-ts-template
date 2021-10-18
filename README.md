@@ -576,3 +576,26 @@ module.exports = merge(common, {
 Prevent linting errors before commit and there are no linting errors and
 if it is just formatting errors, then the code will be automatically formatted
 and then commited!
+
+## 그 외
+
+- `@babel/runtime` `@babel/plugin-transform-runtime` : A plugin that enables the re-use of Babel's injected helper code to save on codesize.
+
+  - let you use async - await features in your application
+
+  - 참고 : https://babeljs.io/docs/en/babel-plugin-transform-runtime
+
+- `copy-webpack-plugin` : it can be used to copy static assets into your build folder
+
+- `webpack-bundle-analyzer`
+
+This module will help you:
+
+1. Realize what's really inside your bundle
+2. Find out what modules make up the most of its size
+3. Find modules that got there by mistake
+4. Optimize it!
+
+### webpack bundle analyzer 스크립트로 사용하기
+
+[참고](https://pusha.tistory.com/entry/webpack-bundle-analyzer-%EC%9B%B9%ED%8C%A9-%ED%94%8C%EB%9F%AC%EA%B7%B8%EC%9D%B8-%EC%84%A4%EC%A0%95-%EB%B0%A9%EB%B2%95)
