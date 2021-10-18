@@ -1,33 +1,34 @@
 ## 웹팩이란?
+
 웹팩이란 최신 프런트엔드 프레임워크에서 가장 많이 사용되는 모듈 번들러(Module Bundler)입니다. 모듈 번들러란 웹 애플리케이션을 구성하는 자원(HTML, CSS, Javscript, Images 등)을 모두 각각의 모듈로 보고 이를 조합해서 병합된 하나의 결과물을 만드는 도구를 의미합니다
 
 ## 모듈이란?
+
 모듈이란 프로그래밍 관점에서 특정 기능을 갖는 작은 코드 단위를 의미합니다. 자바스크립트로 치면 아래와 같은 코드가 모듈입니다.
 
 ```javascript
-
 // math.js
 function sum(a, b) {
-  return a + b;
+  return a + b
 }
 
 function substract(a, b) {
-  return a - b;
+  return a - b
 }
 
-const pi = 3.14;
+const pi = 3.14
 
 export { sum, substract, pi }
 ```
 
 - 이 math.js 파일은 아래와 같이 3가지 기능을 갖고 있는 모듈입니다.
 
-1. 두 숫자의 합을 구하는 ``sum()`` 함수
-2. 두 숫자의 차를 구하는 ``subtract()`` 함수
-3. 원주율 값을 갖는 ``pi`` 상수
-
+1. 두 숫자의 합을 구하는 `sum()` 함수
+2. 두 숫자의 차를 구하는 `subtract()` 함수
+3. 원주율 값을 갖는 `pi` 상수
 
 ### 웹팩에서의 모듈
+
 웹팩에서 지칭하는 모듈이라는 개념은 위와 같이 자바스크립트 모듈에만 국한되지 않고 웹 애플리케이션을 구성하는 모든 자원을 의미합니다. 웹 애플리케이션을 제작하려면 HTML, CSS, Javascript, Images, Font 등 많은 파일들이 필요하죠. 이 파일 하나하나가 모두 모듈입니다.
 
 ## 모듈 번들링
@@ -36,62 +37,54 @@ export { sum, substract, pi }
 
 ![webpack-bundling e79747a1](https://user-images.githubusercontent.com/63832678/137429623-72360e6d-ae25-425d-920d-63bbeff959db.png)
 
-
 ## 웹팩의 등장 배경
 
 1. 파일 단위의 자바스크립트 모듈 관리의 필요성
 2. 웹 개발 작업 자동화 도구 (Web Task Manager)
 3. 웹 어플리케이션의 빠른 로딩 속도와 높은 성능
-(웹팩은 기본적으로 필요한 자원은 미리 로딩하는게 아니라 그 때 그 때 요청하자는 철학을 갖고 있습니다.)
-
+   (웹팩은 기본적으로 필요한 자원은 미리 로딩하는게 아니라 그 때 그 때 요청하자는 철학을 갖고 있습니다.)
 
 ## 웹팩으로 해결하려는 문제
 
 - 자바스크립트 변수 유효 범위
-  - 웹팩은 변수 유효 범위의 문제점을 ES6의 Modules 문법과 웹팩의 모듈 번들링으로 해결합니다.
 
+  - 웹팩은 변수 유효 범위의 문제점을 ES6의 Modules 문법과 웹팩의 모듈 번들링으로 해결합니다.
 
 - 브라우저별 HTTP 요청 숫자의 제약
   - TCP 스펙에 따라 브라우저에서 한 번에 서버로 보낼 수 있는 HTTP 요청 숫자는 제약되어 있습니다. 아래의 표는 최신 브라우저 별 최대 HTTP 요청 횟수입니다.
 
-| 브라우저 | 최대 연결 횟수 |
-| ------ | -------- |
-| 익스플로러 7      | 2     |
-| 익스플로러 8 ~ 9      | 6     |
-| 익스플로러 10, 11      | 8, 13     |
-| 크롬      | 6     |
-| 사파리      | 6     |
-| 파이어폭스      | 6     |
-| 오페라      | 6     |
-| 안드로이드, iOS      | 6     |
+| 브라우저          | 최대 연결 횟수 |
+| ----------------- | -------------- |
+| 익스플로러 7      | 2              |
+| 익스플로러 8 ~ 9  | 6              |
+| 익스플로러 10, 11 | 8, 13          |
+| 크롬              | 6              |
+| 사파리            | 6              |
+| 파이어폭스        | 6              |
+| 오페라            | 6              |
+| 안드로이드, iOS   | 6              |
 
-``
-따라서, HTTP 요청 숫자를 줄이는 것이 웹 애플리케이션의 성능을 높여줄 뿐만 아니라 사용자가 사이트를 조작하는 시간을 앞당겨 줄 수 있죠.
-``
+`따라서, HTTP 요청 숫자를 줄이는 것이 웹 애플리케이션의 성능을 높여줄 뿐만 아니라 사용자가 사이트를 조작하는 시간을 앞당겨 줄 수 있죠.`
 
-``
-웹팩을 이용해 여러 개의 파일을 하나로 합치면 위와 같은 브라우저별 HTTP 요청 숫자 제약을 피할 수 있습니다
-``
+`웹팩을 이용해 여러 개의 파일을 하나로 합치면 위와 같은 브라우저별 HTTP 요청 숫자 제약을 피할 수 있습니다`
 
 - 사용하지 않는 코드의 관리
 
-
 - Dynamic Loading & Lazy Loading 미지원
-  - Require.js와 같은 라이브러리를 쓰지 않으면 동적으로 원하는 순간에 모듈을 로딩하는 것이 불가능 했습니다. 그러나 이젠 웹팩의 **Code Splitting** 기능을 이용하여 원하는 모듈을 원하는 타이밍에 로딩할 수 있습니다.
 
+  - Require.js와 같은 라이브러리를 쓰지 않으면 동적으로 원하는 순간에 모듈을 로딩하는 것이 불가능 했습니다. 그러나 이젠 웹팩의 **Code Splitting** 기능을 이용하여 원하는 모듈을 원하는 타이밍에 로딩할 수 있습니다.
 
   ## Entry
 
   `entry` 속성은 웹팩에서 웹 자원을 변환하기 위해 필요한 최초 진입점이자 자바스크립트 파일 경로입니다.
 
-
 ```javascript
-
 // webpack.config.js
 module.exports = {
-  entry: './src/index.js'
+  entry: './src/index.js',
 }
 ```
+
 위 코드는 웹팩을 실행했을 때 src 폴더 밑의 index.js 을 대상으로 웹팩이 빌드를 수행하는 코드입니다.
 
 ## Entry 파일에는 어떤 내용이 들어가야 하나?
@@ -99,19 +92,20 @@ module.exports = {
 `entry` 속성에 지정된 파일에는 웹 애플리케이션의 전반적인 구조와 내용이 담겨져 있어야 합니다. 웹팩이 해당 파일을 가지고 웹 애플리케이션에서 사용되는 모듈들의 연관 관계를 이해하고 분석하기 때문에 애플리케이션을 동작시킬 수 있는 내용들이 담겨져 있어야 합니다.
 
 예를 들어, 블로그 서비스를 웹팩으로 빌드한다고 했을 때 코드의 모양은 아래와 같을 수 있습니다.
+
 ```javascript
 // index.js
-import LoginView from './LoginView.js';
-import HomeView from './HomeView.js';
-import PostView from './PostView.js';
+import LoginView from './LoginView.js'
+import HomeView from './HomeView.js'
+import PostView from './PostView.js'
 
 function initApp() {
-  LoginView.init();
-  HomeView.init();
-  PostView.init();
+  LoginView.init()
+  HomeView.init()
+  PostView.init()
 }
 
-initApp();
+initApp()
 ```
 
 위 코드는 해당 서비스가 **싱글 페이지 애플리케이션**이라고 가정하고 작성한 코드입니다. 사용자의 **로그인 화면**, 로그인 후 진입하는 **메인 화면**, 그리고 **게시글을 작성하는 화면** 등 웹 서비스에 필요한 화면들이 모두 index.js 파일에서 불려져 사용되고 있기 때문에 웹팩을 실행하면 해당 파일들의 내용까지 해석하여 파일을 빌드해줄 것입니다.
@@ -134,33 +128,34 @@ entry: {
 
 위와 같이 엔트리 포인트를 분리하는 경우는 **싱글 페이지 애플리케이션 SPA**이 아닌 특정 페이지로 진입했을 때 서버에서 해당 정보를 내려주는 형태의 **멀티 페이지 애플리케이션 MPA**에 적합합니다.
 
-
 ## Output
+
 `output` 속성은 웹팩을 돌리고 난 결과물의 파일 경로를 의미
+
 ```javascript
 // webpack.config.js
 module.exports = {
   output: {
-    filename: 'bundle.js'
-  }
+    filename: 'bundle.js',
+  },
 }
 ```
+
 `entry` 속성과 다르게 **객체형태**로 옵션들을 추가해야 합니다.
 
-
-
 ## Output 속성 옵션 형태
+
 최소한 `filename`은 지정해줘야 하며 일반적으로 아래와 같이 `path` 속성을 함께 정의합니다.
 
 ```javascript
 // webpack.config.js
-var path = require('path');
+var path = require('path')
 
 module.exports = {
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, './dist')
-  }
+    path: path.resolve(__dirname, './dist'),
+  },
 }
 ```
 
@@ -174,8 +169,6 @@ output: './dist/bundle.js'
 
 `path` 라이브러리 참고 : https://nodejs.org/api/path.html
 
-
-
 ## Loader
 
 로더(Loader)는 웹팩이 웹 애플리케이션을 해석할 때 자바스크립트 파일이 아닌 웹 자원(HTML, CSS, Images, 폰트 등)들을 변환할 수 있도록 도와주는 속성입니다.
@@ -184,10 +177,11 @@ output: './dist/bundle.js'
 // webpack.config.js
 module.exports = {
   module: {
-    rules: []
-  }
+    rules: [],
+  },
 }
 ```
+
 엔트리나 아웃풋 속성과는 다르게 `module`라는 이름을 사용합니다.
 
 ## CSS Loader 적용하기
@@ -201,16 +195,16 @@ npm i css-loader -D
 module.exports = {
   entry: './app.js',
   output: {
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: ['css-loader']
-      }
-    ]
-  }
+        use: ['css-loader'],
+      },
+    ],
+  },
 }
 ```
 
@@ -219,7 +213,6 @@ module.exports = {
 - `test` : 로더를 적용할 파일 유형 (일반적으로 정규 표현식 사용)
 
 - `use` : 해당 파일에 적용할 로더의 이름
-
 
 ## 자주 사용되는 로더 종류
 
@@ -235,14 +228,13 @@ module.exports = {
 
 특정 파일에 대해 여러 개의 로더를 사용하는 경우 로더가 적용되는 순서에 주의해야 합니다. 로더는 기본적으로 **오른쪽에서 왼쪽 순**으로 적용됩니다.
 
-
 ```javascript
 module: {
   rules: [
     {
       test: /\.scss$/,
-      use: ['css-loader', 'sass-loader']
-    }
+      use: ['css-loader', 'sass-loader'],
+    },
   ]
 }
 ```
@@ -265,7 +257,7 @@ module: {
 ```javascript
 // webpack.config.js
 module.exports = {
-  plugins: []
+  plugins: [],
 }
 ```
 
@@ -273,14 +265,11 @@ module.exports = {
 
 ```javascript
 // webpack.config.js
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+var webpack = require('webpack')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  plugins: [
-    new HtmlWebpackPlugin(),
-    new webpack.ProgressPlugin()
-  ]
+  plugins: [new HtmlWebpackPlugin(), new webpack.ProgressPlugin()],
 }
 ```
 
@@ -311,7 +300,6 @@ module.exports = {
 
 # Webpack Dev Server
 
-
 웹팩 데브 서버는 웹 애플리케이션을 개발하는 과정에서 유용하게 쓰이는 도구입니다. 웹팩의 빌드 대상 파일이 변경 되었을 때 매번 웹팩 명령어를 실행하지 않아도 코드만 변경하고 저장하면 웹팩으로 빌드한 후 브라우저를 새로고침 해줍니다.
 
 매번 명령어를 치는 시간과 브라우저를 새로 고침하는 시간 뿐만 아니라 웹팩 빌드 시간 또한 줄여주기 때문에 웹팩 기반의 웹 애플리케이션 개발에 필수로 사용됩니다.
@@ -333,9 +321,8 @@ module.exports = {
 
 > 컴퓨터 구조 관점에서 파일 입출력보다 메모리 입출력이 더 빠르고 컴퓨터 자원이 덜 소모됩니다 😄
 
-
-
 ## 프록시(Proxy) 설정
+
 프록시 설정은 실무에서 가장 흔하게 사용하는 속성입니다. 아래와 같이 선언합니다.
 
 ```javascript
@@ -343,11 +330,12 @@ module.exports = {
 module.exports = {
   devServer: {
     proxy: {
-      '/api': 'http://localhost:3000'
-    }
-  }
-};
+      '/api': 'http://localhost:3000',
+    },
+  },
+}
 ```
+
 위와 같이 설정하고 나면 로컬 웹팩 데브 서버에서 발생하는 API 요청에 변화가 생깁니다. 그림으로 살펴보겠습니다. 먼저 프록시를 쓰지 않았을 때의 기본적인 웹팩 데브 서버와 API 서버의 통신 구조입니다.
 
 ![proxy](https://user-images.githubusercontent.com/63832678/137696011-7cc4510d-6428-4f4c-918e-4881beb0add1.png)
@@ -360,14 +348,13 @@ module.exports = {
 module.exports = {
   devServer: {
     proxy: {
-      '/api': 'domain.com'
-    }
-  }
-};
+      '/api': 'domain.com',
+    },
+  },
+}
 ```
 
 ![proxy_setting](https://user-images.githubusercontent.com/63832678/137700172-9789e667-b0bb-4a39-b5e1-dfb5fc5b3c4e.png)
-
 
 CORS가 브라우저 보안과 관련있기 때문에 브라우저에서 벗어나 서버에서 서버로 요청합니다. 실제로 브라우저에서는 `localhost:8080/api/login` 으로 요청했지만 중간에 프록시 서버의 활약으로 domain.com 서버에서는 같은 도메인(domain.com)에서 온 요청으로 인식하여 CORS 에러가 나지 않습니다.
 
@@ -379,15 +366,15 @@ module.exports = {
     proxy: {
       '/api': {
         target: 'domain.com',
-        changeOrigin: true
-      }
-    }
-  }
-};
+        changeOrigin: true,
+      },
+    },
+  },
+}
 ```
 
-
 ## HMR(Hot Module Replacement)
+
 HMR은 브라우저를 새로 고치지 않아도 웹팩으로 빌드한 결과물이 웹 애플리케이션에 실시간으로 반영될 수 있게 도와주는 설정입니다. 브라우저 새로 고침을 위한 LiveReload 대신에 사용할 수 있으며 웹팩 데브 서버와 함께 사용할 수도 있습니다.
 
 ## HMR 설정하기
@@ -397,12 +384,12 @@ HMR은 브라우저를 새로 고치지 않아도 웹팩으로 빌드한 결과�
 ```javascript
 module.exports = {
   devServer: {
-    hot: true
-  }
+    hot: true,
+  },
 }
 ```
-데브 서버에 옵션으로 hot:true를 추가하고 자바스크립트나 CSS 스타일시트를 변경하면 해당 모듈이 바로 업데이트가 됩니다. 그리고 화면에서는 브라우저가 다시 로딩되지 않고도 변경된 내용을 확인할 수 있습니다.
 
+데브 서버에 옵션으로 hot:true를 추가하고 자바스크립트나 CSS 스타일시트를 변경하면 해당 모듈이 바로 업데이트가 됩니다. 그리고 화면에서는 브라우저가 다시 로딩되지 않고도 변경된 내용을 확인할 수 있습니다.
 
 ## Source Map
 
@@ -412,11 +399,10 @@ module.exports = {
 
 웹팩에서 소스 맵을 설정하는 방법은 아래와 같습니다.
 
-
 ```javascript
 // webpack.config.js
 module.exports = {
-  devtool: 'cheap-eval-source-map'
+  devtool: 'cheap-eval-source-map',
 }
 ```
 
@@ -425,7 +411,6 @@ module.exports = {
 위에서 정의한 소스 맵 설정 옵션 이외에도 많은 옵션들이 있습니다. 자세한 옵션 속성과 비교는 다음 링크로 확인하세요.
 
 [소스맵 설정 옵션 비교표](https://webpack.js.org/configuration/devtool/#devtool)
-
 
 ## 웹팩 실행 모드 - mode
 
@@ -447,7 +432,6 @@ module.exports = {
 
 > 모드의 기본 값을 설정하지 않으면 `production` 모드로 자동 설정됩니다.
 
-
 ## 실행 모드에 따라 웹팩 설정 달리하기
 
 웹팩으로 실제 웹 애플리케이션을 개발할 때는 보통 아래와 같이 2가지 케이스로 구분하여 작업해야 합니다.
@@ -460,9 +444,8 @@ module.exports = {
 ```javascript
 // webpack.config.js
 module.exports = (env) => {
-  let entryPath = env.mode === 'production'
-    ? './public/index.js'
-    : './src/index.js';
+  let entryPath =
+    env.mode === 'production' ? './public/index.js' : './src/index.js'
 
   return {
     entry: entryPath,
@@ -485,9 +468,9 @@ module.exports = (env) => {
 
 ```javascript
 // 기존
-module.exports = {};
+module.exports = {}
 // 현재
-module.exports = () => {};
+module.exports = () => {}
 ```
 
 그리고 함수에 넘겨준 env 인자는 환경 변수를 의미하며 웹팩을 실행할 때 실행 옵션으로 넘겨줄 수 있습니다.
@@ -506,7 +489,6 @@ webpack --env.a=10
 
 웹팩 머지를 효율적으로 사용하는 방법은 개발용과 배포용 설정 파일에서 공통으로 쓰이는 부분을 먼저 분리하는 것입니다. 파일 체계는 아래와 같은 형식으로 구성합니다.
 
-
 - webpack.common.js
 - webpack.dev.js
 - webpack.prod.js
@@ -518,42 +500,39 @@ webpack --env.a=10
 module.exports = {
   entry: './src/index.js',
   output: {
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin(),
-  ],
+  plugins: [new CleanWebpackPlugin(), new HtmlWebpackPlugin()],
 }
 ```
+
 공통 설정 파일에는 **엔트리**, **아웃풋**, **플러그인**과 같이 실행 모드에 관계 없이 항상 들어가야 하는 코드를 추가합니다.
 
 ```javascript
 // webpack.dev.js
-const merge = require('webpack-merge');
-const common = require('./webpack.common.js');
+const merge = require('webpack-merge')
+const common = require('./webpack.common.js')
 
 module.exports = merge(common, {
   mode: 'development',
   devtool: 'inline-source-map',
-  devServer: { contentBase: './dist' }
-});
+  devServer: { contentBase: './dist' },
+})
 ```
 
 개발용 설정 파일에는 개발자 도구나 웹팩 데브 서버와 같은 설정을 추가합니다. 그리고 webpack-merge 라이브러리를 설치 및 로딩하고 나서 웹팩 공통 설정 파일인 webpack.common.js 파일을 로딩해서 같이 병합해줍니다.
 
 ```javascript
 // webpack.prod.js
-const merge = require('webpack-merge');
-const common = require('./webpack.common.js');
+const merge = require('webpack-merge')
+const common = require('./webpack.common.js')
 
 module.exports = merge(common, {
-  mode: 'production'
-});
+  mode: 'production',
+})
 ```
 
 배포용 설정 파일에는 배포하기 전 웹 리소스 최적화를 위한 설정들을 추가해줍니다.
-
 
 > 참고사이트
 
@@ -563,6 +542,7 @@ module.exports = merge(common, {
 ## ESLINT
 
 **eslint-plugin-jsx-a11y**
+
 - ESLint 플러그인인 eslint-plugin-jsx-a11y는 JSX 내의 접근성 문제에 대해 즉각적인 AST 린팅 피드백을 제공합니다.
 
 - **eslint-plugin-jsx-a11y** adds `accessibility standards` into your application in realtime.
@@ -573,21 +553,26 @@ module.exports = merge(common, {
 
 접근성을 모든 사람을 동일하게 대하고, 그들의 능력이나 상황에 상관 없이 그들에게 같은 기회를 주는 것으로 생각할 수도 있습니다. 휠체어에 있기 때문에 누군가를 물리적 건물에서 제외시키는 것이 옳지 않은 것과 같은 방식으로(공공 건물에는 일반적으로 휠체어 경사로나 엘리베이터가 있기 때문에), 휴대 전화를 사용하지 않는 사람을 웹 사이트에서 제외시키는 것도 옳지 않다. 우리는 모두 다르지만, 모두 인간이기 때문에, 동일한 권리를 갖고 있다.
 
-접근성은 당연히 지켜져야 할 일이지만 일부 국가에서는 법의 일부이기도 하며,  서비스 사용이나 제품 구매가 불가능했던 사람들을 불러모아 중요한 소비자들로 만들수도 있습니다.
+접근성은 당연히 지켜져야 할 일이지만 일부 국가에서는 법의 일부이기도 하며, 서비스 사용이나 제품 구매가 불가능했던 사람들을 불러모아 중요한 소비자들로 만들수도 있습니다.
 
 접근성 및 이에 따른 모범 사례는 다음과 같은 모든 사람에게 도움이 될 수 있습니다.
 
-- 시맨틱한 HTML (접근성이 향상된)은 SEO 향상시켜,  사이트를 찾기 쉽고 시장성이 있도록 해준다.
+- 시맨틱한 HTML (접근성이 향상된)은 SEO 향상시켜, 사이트를 찾기 쉽고 시장성이 있도록 해준다.
 
 - 접근성에 대해 고려하는것은 좋은 윤리적인 도덕 관념을 보여 주는데, 이것은 서비스의 대중적인 이미지를 개선시킵니다.
 
 - 접근성을 향상시키는 다른 좋은 방법은 당신의 사이트를 휴대폰 사용자, 낮은 네트워크 속도의 사용자등 다른 여러 사용자가 사용하기 쉽게 만든다.
 
-
 ## Prettier
 
-
 ### Installed packages
+
 - `prettier` : core prettier library
 - `eslint-config-prettier` : disables eslint rules that might conflict with `prettier` formatting
 - `eslint-plugin-prettier` : runs `prettier` as an eslint rule
+
+## Husky
+
+Prevent linting errors before commit and there are no linting errors and
+if it is just formatting errors, then the code will be automatically formatted
+and then commited!
