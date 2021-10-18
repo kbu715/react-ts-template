@@ -1,7 +1,7 @@
-import './styles.css';
-import IMAGE from './react.png';
-import LOGO from './logo.svg';
-import { Counter } from './Counter';
+import './styles.css'
+import IMAGE from './react.png'
+import LOGO from './logo.svg'
+import { Counter } from './Counter'
 
 export const App = () => {
   return (
