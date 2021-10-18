@@ -599,3 +599,6 @@ This module will help you:
 ### webpack bundle analyzer 스크립트로 사용하기
 
 [참고](https://pusha.tistory.com/entry/webpack-bundle-analyzer-%EC%9B%B9%ED%8C%A9-%ED%94%8C%EB%9F%AC%EA%B7%B8%EC%9D%B8-%EC%84%A4%EC%A0%95-%EB%B0%A9%EB%B2%95)
+
+
+- `clean-webpack-plugin` : By default, this plugin will remove all files inside webpack's output.path directory, as well as all unused webpack assets after every successful rebuild.
